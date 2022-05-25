@@ -50,6 +50,23 @@ app.get("/people", async (req,res) => {
     }
 })
 
+//delete
+app.delete("/people/:id", async (req,res) => {
+try {
+    res.json( await People.findByIdAndDelete(req.params.id))
+} catch (error) {
+    res.status(400).json(error)
+}
+})
+//update
+app.put("/people/:id", async (req,res) => {
+    try {
+        res.json(await People.findByIdAndUpdate(req.params.id, req.body, {new: true}))
+    } catch(error) {
+        res.status(400).json(error)
+    }
+})
+
 //create
 app.post("/people", async (req,res) => {
     try {
@@ -59,6 +76,14 @@ app.post("/people", async (req,res) => {
     }
 })
 
+//show
+app.get("/people/:id", async (req,res) => {
+    try {
+        res.json(await People.findById(req.params.id))
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
 
 //listener
 app.listen(PORT, () => console.log(`listen ${PORT}`))
